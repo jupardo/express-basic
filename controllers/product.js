@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const { mongoUtils, dataBase } = require('../lib/utils/mongo.js');
 const COLLECTION_NAME = 'productos';
 
@@ -22,4 +23,16 @@ function insertProduct(product) {
   });
 }
 
-module.exports = [getProducts, insertProduct];
+async function getProductById(id) {
+  return mongoUtils.conn().then(async (client) => {
+    const product = await client
+      .db(dataBase)
+      .collection(COLLECTION_NAME)
+      .findOne(ObjectId(id))
+      .finally(() => client.close());
+    console.log(product);
+    return product;
+  });
+};
+
+module.exports = [getProducts, insertProduct, getProductById];

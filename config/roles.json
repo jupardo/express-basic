@@ -1,0 +1,9 @@
+{
+  "/products/": {
+    "GET": ["admin", "superadmin"],
+    "POST": ["superadmin"]
+  },
+  "/products/:id/": {
+    "GET": ["user", "admin", "superadmin"]
+  }
+}
